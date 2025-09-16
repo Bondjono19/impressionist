@@ -27,8 +27,6 @@ void LineBrush::BrushBegin(const Point source, const Point target)
 	line_width = pDoc->getLineWidth();
 	angle = pDoc->getLineAngle();
 
-	std::cout << "Angle: " << angle << std::endl;
-
 	BrushMove(source, target);
 }
 
