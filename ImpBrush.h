@@ -31,6 +31,19 @@ public:
 	Point(int xx, int yy) { x = xx; y = yy; };
 
 	int x, y;
+
+	static Point rotate(Point p, double angle);
+};
+
+class PrecisionPoint 
+{
+public:
+	PrecisionPoint() {};
+	PrecisionPoint(double xx, double yy) { x = xx; y = yy; };
+
+	double x, y;
+
+	static PrecisionPoint rotate(PrecisionPoint p, double angle);
 };
 
 class ImpBrush 

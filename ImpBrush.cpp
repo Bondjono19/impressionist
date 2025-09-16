@@ -4,9 +4,17 @@
 // The implementation of virtual brush. All the other brushes inherit from it.
 //
 
+#include <math.h>
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
 #include "ImpBrush.h"
+
+PrecisionPoint PrecisionPoint::rotate(PrecisionPoint p, double angle) {
+	PrecisionPoint rotated;
+	rotated.x = cos(angle) * p.x - sin(angle) * p.y;
+	rotated.y = sin(angle) * p.x + cos(angle) * p.y;
+	return rotated;
+}
 
 // Static class member initializations
 int			ImpBrush::c_nBrushCount	= 0;
