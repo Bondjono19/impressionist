@@ -32,7 +32,9 @@ public:
 
 	int x, y;
 
-	static Point rotate(Point p, double angle);
+	Point operator+(const Point& other) {
+        return Point(x + other.x, y + other.y);
+    }
 };
 
 class PrecisionPoint 
