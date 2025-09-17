@@ -257,7 +257,7 @@ void ImpressionistUI::cb_brushChoice(Fl_Widget* o, void* v)
 
 	pDoc->setBrushType(type);
 
-	if (type == BRUSH_LINES) {
+	if (type == BRUSH_LINES || type == BRUSH_SCATTERED_LINES) {
 		pUI->m_BrushLineWidthSlider->activate();
 		pUI->m_BrushAngleSlider->activate();
 	} else {
