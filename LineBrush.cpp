@@ -45,10 +45,10 @@ void LineBrush::BrushMove(const Point source, const Point target)
 	SetColor( source );
 
 	PrecisionPoint vertices[4] = {
-		PrecisionPoint(-line_height/2, -line_width/2),
-		PrecisionPoint( line_height/2, -line_width/2),
-		PrecisionPoint( line_height/2,  line_width/2),
-		PrecisionPoint(-line_height/2,  line_width/2)
+		PrecisionPoint(-line_height/2.0, -line_width/2.0),
+		PrecisionPoint( line_height/2.0, -line_width/2.0),
+		PrecisionPoint( line_height/2.0,  line_width/2.0),
+		PrecisionPoint(-line_height/2.0,  line_width/2.0)
 	};
 
 	for (int i = 0; i < 4; i++) {

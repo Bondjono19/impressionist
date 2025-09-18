@@ -121,13 +121,16 @@ void PaintView::draw()
 			RestoreContent();
 			break;
 		case RIGHT_MOUSE_DOWN:
-
+			SaveCurrentContent();
+			m_pDoc->m_pMeasureBrush->BrushBegin( source, target );
 			break;
 		case RIGHT_MOUSE_DRAG:
-
+			RestoreContent();
+			m_pDoc->m_pMeasureBrush->BrushMove( source, target );
 			break;
 		case RIGHT_MOUSE_UP:
-
+			m_pDoc->m_pMeasureBrush->BrushEnd( source, target );
+			RestoreContent();
 			break;
 
 		default:

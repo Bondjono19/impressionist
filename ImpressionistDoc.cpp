@@ -11,15 +11,14 @@
 #include "impressionistUI.h"
 
 #include "ImpBrush.h"
-#include "CircleBrush.h"
-#include "LineBrush.h"
-
 // Include individual brush headers here.
+#include "LineBrush.h"
 #include "PointBrush.h"
 #include "CircleBrush.h"
 #include "ScatteredPointsBrush.h"
 #include "ScatteredLinesBrush.h"
 #include "ScatteredCircleBrush.h"
+#include "MeasureBrush.h"
 
 #define DESTROY(p)	{  if ((p)!=NULL) {delete [] p; p=NULL; } }
 
@@ -53,6 +52,9 @@ ImpressionistDoc::ImpressionistDoc()
 
 	// make one of the brushes current
 	m_pCurrentBrush	= ImpBrush::c_pBrushes[0];
+	m_pMeasureBrush = new MeasureBrush(this, "Measure");
+
+	m_nCurrentStrokeDirection = SLIDER_OR_RIGHT_MOUSE;
 
 }
 
@@ -80,6 +82,15 @@ char* ImpressionistDoc::getImageName()
 void ImpressionistDoc::setBrushType(int type)
 {
 	m_pCurrentBrush	= ImpBrush::c_pBrushes[type];
+}
+
+//---------------------------------------------------------
+// Called by the UI when the user changes the brush type.
+// type: one of the defined brush types.
+//---------------------------------------------------------
+void ImpressionistDoc::setStrokeDirection(int type)
+{
+	m_nCurrentStrokeDirection = type;
 }
 
 //---------------------------------------------------------

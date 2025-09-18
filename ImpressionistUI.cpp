@@ -260,10 +260,29 @@ void ImpressionistUI::cb_brushChoice(Fl_Widget* o, void* v)
 	if (type == BRUSH_LINES || type == BRUSH_SCATTERED_LINES) {
 		pUI->m_BrushLineWidthSlider->activate();
 		pUI->m_BrushAngleSlider->activate();
+		pUI->m_StrokeDirectionChoice->activate();
 	} else {
 		pUI->m_BrushLineWidthSlider->deactivate();
 		pUI->m_BrushAngleSlider->deactivate();
+		pUI->m_StrokeDirectionChoice->deactivate();
 	}
+}
+
+//-------------------------------------------------------------
+// Sets the stroke direction to use to the one chosen in the stroke
+// direction choice.  
+// Called by the UI when a stroke direction is chosen in the stroke
+// direction choice.
+//-------------------------------------------------------------
+void ImpressionistUI::cb_strokeDirectionChoice(Fl_Widget* o, void* v)
+{
+	ImpressionistUI* pUI=((ImpressionistUI *)(o->user_data()));
+	ImpressionistDoc* pDoc=pUI->getDocument();
+
+	int type=(int)v;
+
+
+	pDoc->setStrokeDirection(type);
 }
 
 //------------------------------------------------------------
@@ -401,6 +420,14 @@ void ImpressionistUI::setSize( int size )
 		m_BrushSizeSlider->value(m_nSize);
 }
 
+void ImpressionistUI::setAngle( int angle )
+{
+	m_nAngle=angle;
+
+	if (angle<=359) 
+		m_BrushAngleSlider->value(m_nAngle);
+}
+
 // Main menu definition
 Fl_Menu_Item ImpressionistUI::menuitems[] = {
 	{ "&File",		0, 0, 0, FL_SUBMENU },
@@ -430,6 +457,13 @@ Fl_Menu_Item ImpressionistUI::brushTypeMenu[NUM_BRUSH_TYPE+1] = {
   {0}
 };
 
+// Stroke direction choice menu definition
+Fl_Menu_Item ImpressionistUI::strokeDirectionMenu[NUM_BRUSH_STOKE_TYPE+1] = {
+  {"Slider/Right Mouse",	FL_ALT+'s', (Fl_Callback *)ImpressionistUI::cb_strokeDirectionChoice, (void *)SLIDER_OR_RIGHT_MOUSE},
+  {"Gradient",				FL_ALT+'g', (Fl_Callback *)ImpressionistUI::cb_strokeDirectionChoice, (void *)GRADIENT},
+  {"Brush Direction",		FL_ALT+'b', (Fl_Callback *)ImpressionistUI::cb_strokeDirectionChoice, (void *)BRUSH_STROKE_DIRECTION},
+  {0}
+};
 
 
 //----------------------------------------------------
@@ -464,7 +498,7 @@ ImpressionistUI::ImpressionistUI() {
 	// init values
 
 	m_nSize = 10;
-	m_nLineWidth = 10;
+	m_nLineWidth = 1;
 	m_nAngle = 0;
 	m_nAlpha = 1.0f;
 
@@ -475,6 +509,12 @@ ImpressionistUI::ImpressionistUI() {
 		m_BrushTypeChoice->user_data((void*)(this));	// record self to be used by static callback functions
 		m_BrushTypeChoice->menu(brushTypeMenu);
 		m_BrushTypeChoice->callback(cb_brushChoice);
+
+		m_StrokeDirectionChoice = new Fl_Choice(110,40,150,25,"&Stoke Direction");
+		m_StrokeDirectionChoice->user_data((void*)(this));	// record self to be used by static callback functions
+		m_StrokeDirectionChoice->menu(strokeDirectionMenu);
+		m_StrokeDirectionChoice->callback(cb_strokeDirectionChoice);
+		m_StrokeDirectionChoice->deactivate();
 
 		m_ClearCanvasButton = new Fl_Button(240,10,150,25,"&Clear Canvas");
 		m_ClearCanvasButton->user_data((void*)(this));
