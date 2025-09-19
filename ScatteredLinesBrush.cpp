@@ -49,7 +49,7 @@ void ScatteredLinesBrush::BrushMove(const Point source, const Point target)
 			angle = 360 + (int)(atan2(target.y - prev.y, target.x - prev.x) * 180 / PI) % 360;
 
 		}
-	}
+	}	
 
 	PrecisionPoint vertices[4] = {
 		PrecisionPoint(-line_height/2.0, -line_width/2.0),
@@ -65,6 +65,14 @@ void ScatteredLinesBrush::BrushMove(const Point source, const Point target)
 	    glBegin(GL_POLYGON);
 
             SetColor( offset + source );
+			if (pDoc->m_nCurrentStrokeDirection == GRADIENT)
+			{
+				Point g = GetGradient(offset + target);
+				if (!(g.x == 0 && g.y == 0)) {
+					angle = (360 + (int)(atan2(g.y, g.x) * 180 / PI)) % 360;
+				}
+			}
+
             for (int j = 0; j < 4; j++) {
                 PrecisionPoint rotated = PrecisionPoint::rotate(vertices[j], angle * PI / 180.0);
                 glVertex2d(target.x + rotated.x + offset.x, target.y + rotated.y + offset.y);

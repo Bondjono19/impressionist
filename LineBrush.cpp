@@ -47,6 +47,13 @@ void LineBrush::BrushMove(const Point source, const Point target)
 			angle = (360 + (int)(atan2(target.y - prev.y, target.x - prev.x) * 180 / PI)) % 360;
 		}
 	}
+	else if (pDoc->m_nCurrentStrokeDirection == GRADIENT)
+	{
+		Point g = GetGradient(target);
+		if (!(g.x == 0 && g.y == 0)) {
+			angle = (360 + (int)(atan2(g.y, g.x) * 180 / PI)) % 360;
+		}
+	}
 
 	glBegin(GL_POLYGON);
 

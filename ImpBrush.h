@@ -74,6 +74,9 @@ public:
 
 	Point prev = Point(-1, -1);
 
+	int ImpBrush::GetLuminance(const Point source);
+	Point ImpBrush::GetGradient(Point target);
+
 	// according to the source image and the position, determine the draw color
 	void SetColor( const Point source );
 

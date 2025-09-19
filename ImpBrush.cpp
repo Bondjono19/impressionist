@@ -43,6 +43,24 @@ char* ImpBrush::BrushName(void)
 	return m_pBrushName;
 }
 
+int ImpBrush::GetLuminance(const Point source) {
+	ImpressionistDoc* pDoc = GetDocument();
+	GLubyte* color = pDoc->GetOriginalPixel(source);
+	return (int)(0.2126 * color[0] + 0.7152 * color[1] + 0.0722 * color[2]);
+}
+
+Point ImpBrush::GetGradient(Point target) {
+	int gx = 0, gy = 0;
+	int lum_center = GetLuminance(target);
+	int lum_left = GetLuminance(Point(target.x - 1, target.y));
+	int lum_right = GetLuminance(Point(target.x + 1, target.y));
+	int lum_up = GetLuminance(Point(target.x, target.y - 1));
+	int lum_down = GetLuminance(Point(target.x, target.y + 1));
+	gx = lum_right - lum_left;
+	gy = lum_down - lum_up;
+	return Point(gx, gy);
+}
+
 //----------------------------------------------------
 // Set the color to paint with to the color at source,
 // which is the coord at the original window to sample 
