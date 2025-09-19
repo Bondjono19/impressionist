@@ -7,6 +7,7 @@
 // The header file of virtual brush. All the other brushes inherit from it.
 //
 
+#include <math.h>
 #include <stdlib.h>
 
 // Each brush type has an associated constant.
@@ -40,6 +41,10 @@ public:
 
 	int x, y;
 
+	double distance(const Point& other) {
+		return sqrt((x - other.x) * (x - other.x) + (y - other.y) * (y - other.y));
+	}
+
 	Point operator+(const Point& other) {
         return Point(x + other.x, y + other.y);
     }
@@ -66,6 +71,8 @@ public:
 	virtual void BrushBegin( const Point source, const Point target ) = 0;
 	virtual void BrushMove( const Point source, const Point target ) = 0;
 	virtual void BrushEnd( const Point source, const Point target ) = 0;
+
+	Point prev = Point(-1, -1);
 
 	// according to the source image and the position, determine the draw color
 	void SetColor( const Point source );

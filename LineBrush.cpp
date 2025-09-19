@@ -5,6 +5,7 @@
 // will look like the file with the different GL primitive calls.
 //
 
+#include <math.h>
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
 #include "Linebrush.h"
@@ -26,7 +27,6 @@ void LineBrush::BrushBegin(const Point source, const Point target)
 	line_height = pDoc->getSize();
 	line_width = pDoc->getLineWidth();
 	angle = pDoc->getLineAngle();
-
 	BrushMove(source, target);
 }
 
@@ -38,6 +38,14 @@ void LineBrush::BrushMove(const Point source, const Point target)
 	if (pDoc == NULL) {
 		printf("LineBrush::BrushMove  document is NULL\n");
 		return;
+	}
+
+	if (pDoc->m_nCurrentStrokeDirection == BRUSH_STROKE_DIRECTION)
+	{
+		if (prev.x != -1 && prev.y != -1 && !(prev.x == target.x && prev.y == target.y))
+		{
+			angle = (360 + (int)(atan2(target.y - prev.y, target.x - prev.x) * 180 / PI)) % 360;
+		}
 	}
 
 	glBegin(GL_POLYGON);

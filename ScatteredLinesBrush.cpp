@@ -5,6 +5,7 @@
 // will look like the file with the different GL primitive calls.
 //
 
+#include <math.h>
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
 #include "ScatteredLinesbrush.h"
@@ -41,7 +42,14 @@ void ScatteredLinesBrush::BrushMove(const Point source, const Point target)
 		return;
 	}
 
+	if (pDoc->m_nCurrentStrokeDirection == BRUSH_STROKE_DIRECTION)
+	{
+		if (prev.x != -1 && prev.y != -1 && !(prev.x == target.x && prev.y == target.y))
+		{
+			angle = 360 + (int)(atan2(target.y - prev.y, target.x - prev.x) * 180 / PI) % 360;
 
+		}
+	}
 
 	PrecisionPoint vertices[4] = {
 		PrecisionPoint(-line_height/2.0, -line_width/2.0),

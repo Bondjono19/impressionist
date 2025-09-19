@@ -109,10 +109,15 @@ void PaintView::draw()
 		switch (eventToDo) 
 		{
 		case LEFT_MOUSE_DOWN:
+			m_pDoc->m_pCurrentBrush->prev = target;
 			m_pDoc->m_pCurrentBrush->BrushBegin( source, target );
 			break;
 		case LEFT_MOUSE_DRAG:
 			m_pDoc->m_pCurrentBrush->BrushMove( source, target );
+			if(m_pDoc->m_pCurrentBrush->prev.distance(target) > 20.0) // minimum distance of 20 to avoid artifacts
+			{
+				m_pDoc->m_pCurrentBrush->prev = target;
+			}
 			break;
 		case LEFT_MOUSE_UP:
 			m_pDoc->m_pCurrentBrush->BrushEnd( source, target );
