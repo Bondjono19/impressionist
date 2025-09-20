@@ -74,7 +74,8 @@ public:
 
 	Point prev = Point(-1, -1);
 
-	int ImpBrush::GetLuminance(const Point source);
+	int ImpBrush::GetLuminance(const GLubyte color[3]);
+	int ImpBrush::convolve(const Point source, const int kernel[3][3]);
 	Point ImpBrush::GetGradient(Point target);
 
 	// according to the source image and the position, determine the draw color
