@@ -48,18 +48,21 @@ void ScatteredCircleBrush::BrushMove(const Point source, const Point target)
 		printf("ScatteredCircleBrush::BrushMove  document is NULL\n");
 		return;
 	}
-	int offsetX = static_cast<int>(std::round(((frand() - 0.5) * 10)));
-	int offsetY = static_cast<int>(std::round(((frand() - 0.5) * 10)));
-	Point pSource(source.x + offsetX, source.y + offsetY);
-	Point pTarget(target.x + offsetX, target.y + offsetY);
-	glBegin(GL_TRIANGLE_FAN);
-	SetColor(pSource);
+
 	int size = pDoc->getSize();
-	std::vector<float> vertices = calculateScatteredCirclePoints(size, 100, pTarget);
-	for (int i = 0; i < vertices.size(); i = i + 2) {
-		glVertex2d(vertices[i], vertices[i + 1]);
+	for (int i = 0; i < 4; i++) {
+		int offsetX = static_cast<int>(std::round(((frand() - 0.5) * size*2)));
+		int offsetY = static_cast<int>(std::round(((frand() - 0.5) * size*2)));
+		Point pSource(source.x + offsetX, source.y + offsetY);
+		Point pTarget(target.x + offsetX, target.y + offsetY);
+		glBegin(GL_TRIANGLE_FAN);
+		SetColor(pSource);
+		std::vector<float> vertices = calculateScatteredCirclePoints(size/2, 100, pTarget);
+		for (int i = 0; i < vertices.size(); i = i + 2) {
+			glVertex2d(vertices[i], vertices[i + 1]);
+		}
+		glEnd();
 	}
-	glEnd();
 }
 
 void ScatteredCircleBrush::BrushEnd(const Point source, const Point target)

@@ -50,7 +50,7 @@ void CircleBrush::BrushMove(const Point source, const Point target)
 	int size = pDoc->getSize();
 	glBegin(GL_TRIANGLE_FAN);
 	SetColor(source);
-	std::vector<float> vertices = calculateCirclePoints(size, 100, target);
+	std::vector<float> vertices = calculateCirclePoints(size/2, 100, target);
 	for (int i = 0; i < vertices.size(); i=i+2) {
 		glVertex2d(vertices[i], vertices[i + 1]);
 	}
