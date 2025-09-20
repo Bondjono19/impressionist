@@ -51,7 +51,7 @@ void LineBrush::BrushMove(const Point source, const Point target)
 	{
 		Point g = GetGradient(target);
 		if (!(g.x == 0 && g.y == 0)) {
-			angle = (360 + (int)(atan2(g.y, g.x) * 180 / PI)) % 360;
+			angle = (90 + 360 + (int)(atan2(g.y, g.x) * 180 / PI)) % 360; //perpendicular to gradient
 		}
 	}
 
